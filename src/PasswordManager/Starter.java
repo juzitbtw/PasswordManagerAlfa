@@ -33,11 +33,17 @@ public class Starter {
             switch (choice) {
                 case 1:
                     System.out.print("Место: ");
-                    String place = scanner.nextLine();
+                    String place = scanner.nextLine().trim();
                     System.out.print("Логин: ");
-                    String login = scanner.nextLine();
+                    String login = scanner.nextLine().trim();
                     System.out.print("Пароль: ");
-                    String password = scanner.nextLine();
+                    String password = scanner.nextLine().trim();
+
+                    // Добавляем проверку на пустые строки
+                    place = place.isEmpty() ? "[Нет места]" : place;
+                    login = login.isEmpty() ? "[Нет логина]" : login;
+                    password = password.isEmpty() ? "[Нет пароля]" : password;
+
                     manager.addEntry(place, login, password);
                     try {
                         manager.saveEntries(masterPassword);

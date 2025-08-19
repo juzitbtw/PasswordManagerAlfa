@@ -75,9 +75,14 @@ public class GUI extends JFrame {
             if (!isLoggedIn) return;
             try {
                 String masterPass = new String(masterPasswordField.getPassword());
-                String place = placeField.getText();
-                String login = loginField.getText();
-                String password = passwordField.getText();
+                String place = placeField.getText().trim();
+                String login = loginField.getText().trim();
+                String password = passwordField.getText().trim();
+
+                // Добавляем проверку на пустые строки
+                place = place.isEmpty() ? "[Нет места]" : place;
+                login = login.isEmpty() ? "[Нет логина]" : login;
+                password = password.isEmpty() ? "[Нет пароля]" : password;
 
                 passwordManager.addEntry(place, login, password);
                 passwordManager.saveEntries(masterPass);
