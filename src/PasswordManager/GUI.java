@@ -80,7 +80,7 @@ public class GUI extends JFrame {
                 String password = passwordField.getText().trim();
 
                 // Добавляем проверку на пустые строки
-                place = place.isEmpty() ? "[Нет места]" : place;
+                place = place.isEmpty() ? "[Нет адреса]" : place;
                 login = login.isEmpty() ? "[Нет логина]" : login;
                 password = password.isEmpty() ? "[Нет пароля]" : password;
 

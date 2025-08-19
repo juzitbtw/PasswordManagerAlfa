@@ -4,7 +4,7 @@ public class PasswordEntry {
     private String place;
     private String login;
     private String password;
-    private static final String DEFAULT_PLACE = "[Нет места]";
+    private static final String DEFAULT_PLACE = "[Нет адреса]";
     private static final String DEFAULT_LOGIN = "[Нет логина]";
     private static final String DEFAULT_PASSWORD = "[Нет пароля]";
 
