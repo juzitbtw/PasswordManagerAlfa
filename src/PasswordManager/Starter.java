@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Starter {
     public static void main(String[] args) {
         PasswordManager manager = new PasswordManager();
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите мастер-пароль: ");
@@ -41,9 +42,9 @@ public class Starter {
                     try {
                         manager.saveEntries(masterPassword);
                         System.out.println("Запись добавлена.");
-                    } catch (Exception e) {
+                    } catch (Exception ex) {
                         System.out.println("Ошибка сохранения.");
-                        e.printStackTrace();
+                        ex.printStackTrace();
                     }
                     break;
                 case 2:
@@ -54,9 +55,9 @@ public class Starter {
                     try {
                         manager.saveEntries(masterPassword);
                         System.out.println("Запись удалена.");
-                    } catch (Exception e) {
+                    } catch (Exception ex) {
                         System.out.println("Ошибка сохранения.");
-                        e.printStackTrace();
+                        ex.printStackTrace();
                     }
                     break;
                 case 3:
@@ -70,7 +71,9 @@ public class Starter {
                     if (entry != null) {
                         System.out.println("Место: " + entry.getPlace());
                         System.out.println("Логин: " + entry.getLogin());
-                        System.out.println("Пароль: " + entry.getPassword());
+                        System.out.println("Пароль: " +
+                                (entry.getPassword() == null || entry.getPassword().isEmpty()
+                                        ? "[не указан]" : entry.getPassword()));
                     } else {
                         System.out.println("Неверный номер записи.");
                     }

@@ -2,9 +2,6 @@ package PasswordManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
 public class GUI extends JFrame {
     private PasswordManager passwordManager;
@@ -13,7 +10,7 @@ public class GUI extends JFrame {
     private JTextField placeField, loginField, passwordField;
     private JPasswordField masterPasswordField;
     private JButton addButton, removeButton, getButton;
-    private boolean isLoggedIn = false; // Флаг: загружены ли данные?
+    private boolean isLoggedIn = false;
 
     public GUI(PasswordManager manager) {
         this.passwordManager = manager;
@@ -34,8 +31,8 @@ public class GUI extends JFrame {
                 String masterPass = new String(masterPasswordField.getPassword());
                 passwordManager.loadEntries(masterPass);
                 refreshEntryList();
-                isLoggedIn = true; // Разрешаем редактирование
-                enableButtons();   // Включаем кнопки
+                isLoggedIn = true;
+                enableButtons();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Ошибка: " + ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
@@ -71,18 +68,18 @@ public class GUI extends JFrame {
         buttonPanel.add(removeButton);
         buttonPanel.add(getButton);
 
-        disableButtons(); // Изначально все кнопки отключены
+        disableButtons();
 
         // Обработчики событий
         addButton.addActionListener(e -> {
             if (!isLoggedIn) return;
             try {
                 String masterPass = new String(masterPasswordField.getPassword());
-                passwordManager.addEntry(
-                        placeField.getText(),
-                        loginField.getText(),
-                        passwordField.getText()
-                );
+                String place = placeField.getText();
+                String login = loginField.getText();
+                String password = passwordField.getText();
+
+                passwordManager.addEntry(place, login, password);
                 passwordManager.saveEntries(masterPass);
                 refreshEntryList();
                 clearFields();
@@ -117,7 +114,8 @@ public class GUI extends JFrame {
                     StringBuilder sb = new StringBuilder();
                     sb.append("Место: ").append(entry.getPlace()).append("\n")
                             .append("Логин: ").append(entry.getLogin()).append("\n")
-                            .append("Пароль: ").append(entry.getPassword());
+                            .append("Пароль: ").append(entry.getPassword() != null && !entry.getPassword().isEmpty() ?
+                                    entry.getPassword() : "[не указан]");
                     JOptionPane.showMessageDialog(this, sb.toString(), "Данные", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
@@ -149,9 +147,8 @@ public class GUI extends JFrame {
 
     private void refreshEntryList() {
         listModel.clear();
-        List<PasswordEntry> entries = passwordManager.entries;
-        for (int i = 0; i < entries.size(); i++) {
-            PasswordEntry entry = entries.get(i);
+        for (int i = 0; i < passwordManager.entries.size(); i++) {
+            PasswordEntry entry = passwordManager.entries.get(i);
             listModel.addElement(i + ": " + entry.getPlace() + " - " + entry.getLogin());
         }
     }
